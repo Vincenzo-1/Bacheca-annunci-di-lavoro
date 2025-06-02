@@ -10,6 +10,10 @@ const candidatureSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    descrizioneCandidato : {
+        type : String, 
+        required : true
+    },
     dataCandidatura: {
         type: Date,
         default: Date.now //data di candidatura, se non specificata prende la data attuale
