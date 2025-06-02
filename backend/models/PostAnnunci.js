@@ -13,7 +13,7 @@ const postAnnunciSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    localià:{
+    località:{
         type: String,
         required: true
     },
