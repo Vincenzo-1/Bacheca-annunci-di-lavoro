@@ -1,5 +1,5 @@
-import Candidature from "../models/Candidature";
-import PostAnnunci from "../models/PostAnnunci";
+import Candidature from "../models/Candidature.js";
+import PostAnnunci from "../models/PostAnnunci.js";
 
 export const creazioneCandidature = async (req , res) => {
     try{
@@ -33,8 +33,9 @@ export const creazioneCandidature = async (req , res) => {
 
 export const visualizzazioneCandidatureFatte = async (req, res) => {
   try{
-
-    const candidature = await Candidature.find({ emailCandidato : req.params.email})
+    //qua nel caso fare .populate("postAnnunci")
+    
+    const candidature = await Candidature.find({ emailCandidato : req.params.email}).select("postAnnunci dataCandidatura");
     //restituisce un array( vuoto se non trova nulla), non sarà mai undefined o null
     //conterrà il valore dell’email passato nell’URL del routes
     //Se l'array di candidature è vuoto allora è 0
@@ -49,31 +50,34 @@ export const visualizzazioneCandidatureFatte = async (req, res) => {
 
 
 
-
 export const visualizzaCandidaturePerAnnuncio = async (req, res) => {
-    try {
-        const { postAnnunciId } = req.params; //significa: estrai il parametro postAnnunciId dalla URL della richiesta HTTP.
+  try {
+    const { postAnnunciId } = req.params;
 
-        // Verifica se l'annuncio esiste
-        const annuncio = await PostAnnunci.findById(postAnnunciId);
-        if (!annuncio) {
-            return res.status(404).json({ message: "Annuncio non trovato" });
-        }
-
-        // Trova tutte le candidature per quell'annuncio
-        const candidature = await Candidature.find({ postAnnunci: postAnnunciId }); //in candidature, il campo postAnnunci è un riferimento all'ID dell'annuncio.
-        if (candidature.length === 0) {
-            return res.status(404).json({ message: "Nessuna candidatura trovata per questo annuncio" });
-        }
- res.json({ //QUello che viene restituito è un oggetto JSON che contiene le informazioni sull'annuncio e le candidature associate.
-            annuncio: {
-                titolo: annuncio.titolo,
-                azienda: annuncio.azienda,
-                descrizione: annuncio.descrizione
-            },
-            candidature 
-        });
-    } catch (error) {
-        res.status(500).json({ message: "Errore nella visualizzazione delle candidature", error: error.message });
+    // Verifica se l'annuncio esiste
+    const annuncio = await PostAnnunci.findById(postAnnunciId);
+    if (!annuncio) {
+      return res.status(404).json({ message: "Annuncio non trovato" });
     }
-};
+
+    // Trova tutte le candidature per quell'annuncio
+    const candidature = await Candidature.find({ postAnnunci: postAnnunciId });
+
+    if (candidature.length === 0) {
+      return res.status(404).json({ message: "Nessuna candidatura trovata per questo annuncio" });
+    }
+
+    return res.json({
+      annuncio: {
+        titolo: annuncio.titolo,
+        azienda: annuncio.azienda,
+        descrizione: annuncio.descrizione,
+      },
+      candidature,
+    });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: "Errore nella visualizzazione delle candidature", error: error.message });
+  }
+}; 

@@ -1,4 +1,4 @@
-import PostAnnunci from "../models/PostAnnunci";
+import PostAnnunci from "../models/PostAnnunci.js";
 //Controller per pubblicare un Lavoro
 export const pubblicaLavoro = async (req, res) =>{try {
     const {titolo, azienda, descrizione, località, dataPubbilcazione} = req.body;
@@ -18,7 +18,7 @@ res.status(201).json(annunciSalvati); //201 Created indica che la richiesta è a
 
 //Controller per ricevere tutti i lavori
 export const riceviLavoroDaId = async(req, res) => {try {
-    const ricezioneAllLavori = await newPostAnnunci.find();
+    const ricezioneAllLavori = await PostAnnunci.find();
     res.json(ricezioneAllLavori);
 } catch(error){
     res.status(500).json({message:'Errore nella ricezione  annunci di lavoro', error: error.message});
@@ -30,7 +30,7 @@ export const riceviLavoroDaId = async(req, res) => {try {
 
 //Controller per ricevere un lavoro da id
 export const riceviLavoro = async(req,res)=>{ try {
-const ricezioneAnnuncio = await newPostAnnunci.findById(req.params.id);
+const ricezioneAnnuncio = await PostAnnunci.findById(req.params.id);
 if (!ricezioneAnnuncio){
     return res.stautus(404).json({message:'Annuncio di lavoro non trovato'})
 }
@@ -42,7 +42,7 @@ if (!ricezioneAnnuncio){
 //Controller per rimuovere un lavoro da id
 export const rimuoviLavoroDaId = async(req, res) => {
     try{
-        const annunciEliminati = await newPostAnnunci.findByIdAndDelete(req.params.id);
+        const annunciEliminati = await PostAnnunci.findByIdAndDelete(req.params.id);
         if (!annunciEliminati) {
             return res.status(404).json({message:'Errore eliminazione annuncio'}); 
         } 

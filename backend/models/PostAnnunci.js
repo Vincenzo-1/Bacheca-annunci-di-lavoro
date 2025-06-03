@@ -17,11 +17,12 @@ const postAnnunciSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    dataPubbilicazione: {
+    dataPubblicazione: {
         type: Date,
-        default: Date.now}
+        default: Date.now
+    }
 });
 
 
-const PostAnnunci = mongoose.model("postAnnunci", postAnnunciSchema);
+const PostAnnunci = mongoose.model("PostAnnunci", postAnnunciSchema);
 export default PostAnnunci;
