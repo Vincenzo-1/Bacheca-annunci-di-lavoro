@@ -10,7 +10,6 @@ export const creazioneCandidature = async (req , res) => {
 //   Viene usato per valorizzare il campo 'postAnnunci' nello schema Candidature.js, 
 //   che è un riferimento (_ref_) all'annuncio di lavoro.
 
-
       const esistenzaDelLavoro = await PostAnnunci.findById(postAnnunciId);
       if (!esistenzaDelLavoro){
        return res.status(404).json({ message: "Lavoro non trovato"});
@@ -52,21 +51,24 @@ export const visualizzazioneCandidatureFatte = async (req, res) => {
 
 export const visualizzaCandidaturePerAnnuncio = async (req, res) => {
   try {
-    const { postAnnunciId } = req.params;
+    const { postAnnunciId } = req.params;  // Prima estrai l'ID dall'URL
 
-    // Verifica se l'annuncio esiste
+    // Ora cerca l'annuncio nel database
     const annuncio = await PostAnnunci.findById(postAnnunciId);
+
+    // Controlla se l'annuncio esiste
     if (!annuncio) {
       return res.status(404).json({ message: "Annuncio non trovato" });
     }
 
-    // Trova tutte le candidature per quell'annuncio
+    // Cerca tutte le candidature associate a quell'annuncio
     const candidature = await Candidature.find({ postAnnunci: postAnnunciId });
 
     if (candidature.length === 0) {
       return res.status(404).json({ message: "Nessuna candidatura trovata per questo annuncio" });
     }
 
+    // Se tutto ok, rispondi con i dati dell'annuncio e le candidature
     return res.json({
       annuncio: {
         titolo: annuncio.titolo,
@@ -75,9 +77,11 @@ export const visualizzaCandidaturePerAnnuncio = async (req, res) => {
       },
       candidature,
     });
+
   } catch (error) {
-    return res
-      .status(500)
-      .json({ message: "Errore nella visualizzazione delle candidature", error: error.message });
+    return res.status(500).json({
+      message: "Errore nella visualizzazione delle candidature",
+      error: error.message
+    });
   }
-}; 
+};

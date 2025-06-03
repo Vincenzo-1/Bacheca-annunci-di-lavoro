@@ -1,7 +1,7 @@
 import PostAnnunci from "../models/PostAnnunci.js";
 //Controller per pubblicare un Lavoro
 export const pubblicaLavoro = async (req, res) =>{try {
-    const {titolo, azienda, descrizione, località, dataPubbilcazione} = req.body;
+    const {titolo, azienda, descrizione, località} = req.body;
     const newPostAnnunci = new PostAnnunci({
         titolo,
         azienda,
@@ -17,24 +17,27 @@ res.status(201).json(annunciSalvati); //201 Created indica che la richiesta è a
 
 
 //Controller per ricevere tutti i lavori
-export const riceviLavoroDaId = async(req, res) => {try {
+export const riceviLavoro = async(req, res) => {try {
     const ricezioneAllLavori = await PostAnnunci.find();
+    if (ricezioneAllLavori.length === 0) {
+        return res.status(404).json({message: 'Nessun annuncio di lavoro trovato'});
+    }
     res.json(ricezioneAllLavori);
+    
 } catch(error){
     res.status(500).json({message:'Errore nella ricezione  annunci di lavoro', error: error.message});
-
 }
 };
 
-
-
 //Controller per ricevere un lavoro da id
-export const riceviLavoro = async(req,res)=>{ try {
+export const riceviLavoroDaId = async(req,res)=>{ try {
 const ricezioneAnnuncio = await PostAnnunci.findById(req.params.id);
 if (!ricezioneAnnuncio){
     return res.stautus(404).json({message:'Annuncio di lavoro non trovato'})
 }
-} catch(error){ res.status(500).json({message:'Errore nella ricezione annuncio di lavoro', error: error.message})
+res.json(ricezioneAnnuncio);
+} catch(error){
+ res.status(500).json({message:'Errore nella ricezione annuncio di lavoro', error: error.message})
 }};
 
 
