@@ -2,8 +2,9 @@ import express from 'express';
 
 import { 
     creazioneCandidature, 
-    visualizzazioneCandidatureFatte
-} from "../controllers/candidatureController" ;
+    visualizzazioneCandidatureFatte,
+    visualizzaCandidaturePerAnnuncio
+} from "../controllers/candidatureController.js" ;
 
 
 const router = express.Router();
