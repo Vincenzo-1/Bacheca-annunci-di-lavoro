@@ -13,3 +13,6 @@ router.post("/" , creazioneCandidature);
 
 router.get("/worker/:email" , visualizzazioneCandidatureFatte);
 
+router.get("/annuncio/:postAnnunciId", visualizzaCandidaturePerAnnuncio);
+
+export default router;
