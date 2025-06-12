@@ -12,10 +12,12 @@ const router = express.Router() //serve perchè abbiamo creato scheda con routes
 
 router.post('/', pubblicaLavoro);
 
-router.get('/', riceviLavoro);
+router.get('/', riceviLavoro); 
 
 router.get('/:id', riceviLavoroDaId);
 
 router.delete('/:id', rimuoviLavoroDaId);
+
+//router.get('/miei-annunci', ensureAuthenticated, ensureAuthorized(['azienda']), riceviLavoroDaAzienda);
 
 export default router 
