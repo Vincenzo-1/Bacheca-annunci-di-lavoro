@@ -23,7 +23,7 @@ export const creazioneCandidature = async (req , res) => {
       });
       const candidaturaSalvata = await nuoveCandidature.save();
       res.status(201).json( candidaturaSalvata ); //è gia un {json}
-    } catch(e){
+    } catch(error){
         res.status(500).json({ message: "Errore nella creazione della candidatura" , error: e.message});
     }
 };
@@ -42,7 +42,7 @@ export const visualizzazioneCandidatureFatte = async (req, res) => {
       res.status(404).json({message: "Nessuna candidatura trovata per questo Candiadato"});
     }
     res.json(candidature);
-  } catch(e) {
+  } catch(error) {
     res.status(500).json({message: "Errore nella visualizzazione della candidatura" , error: e.message});
   }
 };
@@ -79,8 +79,7 @@ export const visualizzaCandidaturePerAnnuncio = async (req, res) => {
     });
 
   } catch (error) {
-    return res.status(500).json({
-      message: "Errore nella visualizzazione delle candidature",
+    return res.status(500).json({message: "Errore nella visualizzazione delle candidature",
       error: error.message
     });
   }
