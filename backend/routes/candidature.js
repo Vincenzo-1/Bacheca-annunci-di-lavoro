@@ -12,7 +12,7 @@ const router = express.Router();
 
 router.post("/" , creazioneCandidature);
 
-router.get("/lavoratore/:email" , visualizzazioneCandidatureFatte);
+router.get("/lavoratore/:email" , visualizzazioneCandidatureFatte); //al massimo per pulizia cambiare in '/:email'
 
 router.get("/annuncio/:postAnnunciId", visualizzaCandidaturePerAnnuncio);
 

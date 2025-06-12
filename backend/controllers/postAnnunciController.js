@@ -1,5 +1,7 @@
 import PostAnnunci from "../models/PostAnnunci.js";
 //Controller per pubblicare un Lavoro
+
+
 export const pubblicaLavoro = async (req, res) =>{try {
     const {titolo, azienda, descrizione, località} = req.body;
     const newPostAnnunci = new PostAnnunci({
@@ -54,3 +56,29 @@ export const rimuoviLavoroDaId = async(req, res) => {
         res.status(500).json({message:'Errore nella rimozione del lavoro', error: error.message });
     }
 };
+
+/*USERID va preso dal model da aggiungre USER
+export const riceviLavoroDaAzienda = async (req, res) => {
+  try {
+    // Ottiene l'ID dell'utente (azienda) autenticato dalla richiesta (req.user.id).
+    const userId = req.user.id;
+    // Cerca tutti gli annunci nel database dove il campo 'createdBy' corrisponde all'ID dell'utente.
+    // Popola i dettagli del creatore (opzionale, ma può essere utile per conferma).
+    // Ordina gli annunci per data di pubblicazione decrescente.
+    const annunciAzienda = await PostAnnunci.find({ createdBy: userId })
+                                          .populate('createdBy', 'displayName email')
+                                          .sort({ dataPubblicazione: -1 });
+
+    // Se non vengono trovati annunci per l'azienda o l'array è vuoto.
+    if (!annunciAzienda || annunciAzienda.length === 0) {
+      // Restituisce uno stato 404 con un messaggio specifico.
+      return res.status(404).json({ message: 'Nessun annuncio trovato per la tua azienda.' });
+    }
+    // Se trovati, restituisce gli annunci dell'azienda in formato JSON.
+    res.json(annunciAzienda);
+  } catch (error) {
+    // In caso di errore, restituisce un errore 500.
+    res.status(500).json({ message: 'Errore nella ricezione degli annunci della tua azienda', error: error.message });
+  }
+};
+*/
