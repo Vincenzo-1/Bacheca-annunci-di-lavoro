@@ -24,8 +24,8 @@ export const getCandidatureFatte = async (email) =>{
 //La parte ${email} nel template literal inserisce il valore dell’email direttamente nell’URL.
 
 
-// Prende 'applicationData' come argomento, un oggetto che contiene i dati della candidatura.
-// applicationData DEVE contenere almeno:
+// Prende 'candidature' come argomento, un oggetto che contiene i dati della candidatura.
+// candidature DEVE contenere almeno:
   // - postAnnunciId: l'ID dell'annuncio per cui ci si candida.
   // - descrizioneCandidato: il messaggio o la descrizione fornita dal candidato.
   // L'ID e l'email dell'utente 'applier' dovrebbero essere gestiti automaticamente dal backend
@@ -35,6 +35,9 @@ export const creazioneCandidature = async (candidature) => {
     return apiClient.post("/candidature" , candidature);
 };
 
-//Il nome della variabile (candidature) nel frontend non deve per forza essere uguale al nome del model MongoDB.
-//Quello che conta è che l’oggetto che passi abbia le stesse proprietà (campi) che il backend si aspetta per creare una nuova candidatu
-// applicationData--> candidature
+// candidature serve sempre per collegare le robe del frontend
+// e far in modo che quando si posta una cosa, si faccia un createApplication
+// in una page e passi i dati postAnnunciId, descrizioneCandidato...
+// In conclusione si mette candidature per passare i dati elencati dal commento
+// di sopra. Se non avessi messo candidature( potevo chiamarlo in un altro nome qualsiasi)
+// non ci sarebbe niente da passare.
