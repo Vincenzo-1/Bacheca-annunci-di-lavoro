@@ -8,11 +8,11 @@ const candidatureSchema = new mongoose.Schema({
     },
     emailCandidato: {
         type: String,
-        required: true
+        required: [true, "Inserire email"]
     },
     descrizioneCandidato : {
         type : String, 
-        required : true
+        required : [true, "Inserire descrizione"]
     },
     dataCandidatura: {
         type: Date,
@@ -24,3 +24,5 @@ const candidatureSchema = new mongoose.Schema({
 
  const Candidature = mongoose.model("Candidature", candidatureSchema);
  export default Candidature;
+
+ //IMPORTANTE >> FARE IL COLLEGAMENTO CON ATLAS 
