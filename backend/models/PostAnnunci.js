@@ -3,19 +3,19 @@ import mongoose from "mongoose";
 const postAnnunciSchema = new mongoose.Schema({
     titolo: {
         type: String,
-        required: true
+        required: [true, "Inserire titolo"]
     },
     azienda: {
         type: String,
-        required: true
+        required: [true, "Inserire nome azienda"]
     },
     descrizione: {
         type: String,
-        required: true
+        required: [true, "Inserire descrizione"]
     },
     località:{
         type: String,
-        required: true
+        required: [true, "Inserire località"]
     },
     dataPubblicazione: {
         type: Date,
